@@ -29,6 +29,6 @@ public:
         for (int i = 0; i < preorder.size(); ++i) {
             index[inorder[i]] = i;
         }
-        return buildTree(preorder, inorder, 0, n - 1, 0, n - 1);
+        return buildTree(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
     }
 };
