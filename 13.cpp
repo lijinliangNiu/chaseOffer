@@ -9,7 +9,7 @@ private:
     }
 public:
     int movingCount(int m, int n, int k){
-        if(k == 0){
+        if(k == 0){ //赋值要时间，能提前剪就剪
             return 1;
         }
         int res = 1;
