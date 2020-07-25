@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> levelOrder(TreeNode* root) {
-        if(root == NULL){
+        if(root == nullptr){
             return {};
         }
         vector<int> res;
@@ -15,11 +15,11 @@ public:
 
             res.push_back(node->val); 
 
-            if (node->left){
+            if (node->left != nullptr){
                 q.push(node->left);
             }
 
-            if (node->right){
+            if (node->right != nullptr){
                 q.push(node->right);
             }
         }
