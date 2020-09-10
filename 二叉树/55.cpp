@@ -16,7 +16,6 @@ public:
         if(root == nullptr){
             return 0;
         }
-        
         int depth = 0;
         queue<TreeNode*> q;
         q.push(root);
