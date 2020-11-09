@@ -1,41 +1,33 @@
 class Solution {
 private:
-    int random_partition(vector<int>& arr, int l, int r){
-        swap(arr[r], arr[l + rand() % (r - l + 1)]);
-        int pivot = arr[r];
-        int i = l;//待交换位置
-        for(int j = l; j < r; j++){
-            if(arr[j] <= pivot){
+    mt19937 gen{random_device{}()};
+
+    void random_select(vector<int>& arr, int left, int right, int k){
+        swap(arr[right], arr[uniform_int_distribution<int>{left, right}(gen)]);//arr[r]就是pivot
+        int i = left; //待交换位置
+        for(int j = left; j < right; j++){
+            if(arr[j] <= arr[right]){
                 swap(arr[i++], arr[j]);
             }
         }
-        swap(arr[i], arr[r]);
-        return i;
-    }
-    void random_select(vector<int>& arr, int l, int r, int k){
-        if(l >= r){
+        swap(arr[i], arr[right]);//pivot归位
+        int less_num = i - left + 1;
+        if(less_num == k){
             return;
         }
-        int pos = random_partition(arr, l, r);
-        int least_num = pos - l + 1;
-        if(least_num == k){
-            return;
-        }
-        else if(least_num < k){
-            random_select(arr, pos + 1, r, k - least_num);
+        else if(less_num > k){
+            random_select(arr, left, i - 1, k);
         }
         else{
-            random_select(arr, l, pos - 1, k);
+            random_select(arr, i + 1, right, k - less_num);
         }
     }
 public:
     vector<int> getLeastNumbers(vector<int>& arr, int k) {
-        vector<int> ans;
-        srand((unsigned)time(NULL));
-        random_select(arr, 0, (int)arr.size() - 1, k);
-        for(int i = 0; i < k; i++){
-            ans.push_back(arr[i]);
+        if(k == 0){
+            return {};
         }
-        return ans;
+        random_select(arr, 0, arr.size() - 1, k);
+        return {arr.begin(), arr.begin() + k};
     }
 };
